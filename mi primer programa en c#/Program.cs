@@ -1,4 +1,4 @@
-﻿namespace mi_primer_programa_en_c_;
+﻿namespace mi_primera_programa_en_c_;
 
 class Program
 {
