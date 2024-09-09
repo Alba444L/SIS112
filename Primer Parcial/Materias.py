@@ -1,5 +1,5 @@
 class Materia:
-    def __init__(self, nombre, sigla, docente, horarios, aula, prerequisito, carrera, universidad, cantidad_inscritos):
+    def __init__(self, nombre, sigla, docente, horarios, aula, prerequisito, carrera, universidad, cantidad_inscritos, modalidad, calificacion_minima, temas, ubicacion):
         self.nombre = nombre
         self.sigla = sigla
         self.docente = docente
@@ -9,6 +9,10 @@ class Materia:
         self.carrera = carrera
         self.universidad = universidad
         self.cantidad_inscritos = cantidad_inscritos
+        self.modalidad = modalidad
+        self.calificacion_minima = calificacion_minima
+        self.temas = temas
+        self.ubicacion = ubicacion
 
     def mostrar_info(self):
         print(f"\nMateria: {self.nombre}")
@@ -20,6 +24,10 @@ class Materia:
         print(f"Carrera: {self.carrera}")
         print(f"Universidad: {self.universidad}")
         print(f"Cantidad Inscritos: {self.cantidad_inscritos}")
+        print(f"Modalidad: {self.modalidad}")
+        print(f"Calificacion Minima Aprobacion: {self.calificacion_minima}")
+        print(f"Temas: {self.temas}")
+        print(f"Ubicacion Latitud Longitud: {self.ubicacion}")
 
     # Modificar
     def modificar_nombre(self):
@@ -116,6 +124,45 @@ class Materia:
             except ValueError:
                 print("La cantidad debe ser un número entero.")
 
+    def modificar_modalidad(self):
+        while True:
+            nueva_modalidad = input("Ingrese la nueva modalidad (Presencial, Online, Híbrida): ").capitalize()
+            if nueva_modalidad in ["Presencial", "Online", "Híbrida"]:
+                self.modalidad = nueva_modalidad
+                print("Modalidad modificada exitosamente.")
+                break
+            else:
+                print("Modalidad inválida. Intente de nuevo.")
+
+    def modificar_calificacion_minima(self):
+        while True:
+            try:
+                nueva_calificacion = float(input("Ingrese la nueva calificación mínima de aprobación (solo números, entre 0 y 100): "))
+                if 0 <= nueva_calificacion <= 100:
+                    self.calificacion_minima = nueva_calificacion
+                    print("Calificación mínima modificada exitosamente.")
+                    break
+                else:
+                    print("La calificación debe estar entre 0 y 100.")
+            except ValueError:
+                print("Entrada inválida. Por favor, ingrese un número válido.")
+
+    def modificar_ubicacion(self):
+        while True:
+            nueva_ubicacion = input("Ingrese la nueva ubicación (Latitud, Longitud): ")
+            try:
+                latitud, longitud = map(float, nueva_ubicacion.split(','))
+                self.ubicacion = f"{latitud}, {longitud}"
+                print("Ubicación modificada exitosamente.")
+                break
+            except ValueError:
+                print("Entrada inválida. Asegúrese de ingresar dos números separados por una coma.")
+
+    def modificar_temas(self):
+        nuevos_temas = input("Ingrese los nuevos temas, separados por comas: ").split(", ")
+        self.temas = nuevos_temas
+        print("Temas modificados exitosamente.")
+
     # Eliminar
     def eliminar_nombre(self):
         self.nombre = None
@@ -153,6 +200,22 @@ class Materia:
         self.cantidad_inscritos = None
         print("Cantidad de inscritos eliminada.")
 
+    def eliminar_modalidad(self):
+        self.modalidad = None
+        print("Modalidad eliminada.")
+
+    def eliminar_calificacion_minima(self):
+        self.calificacion_minima = None
+        print("Calificacion minima eliminada.")
+
+    def eliminar_temas(self):
+        self.temas = None
+        print("Temas eliminados.")
+
+    def eliminar_ubicacion(self):
+        self.ubicacion = None
+        print("Ubicacion eliminada.")
+   
     # Métodos generales
     def modificar_atributo(self, atributo):
         funciones_modificar = {
@@ -164,7 +227,11 @@ class Materia:
             "prerequisito": self.modificar_prerequisito,
             "carrera": self.modificar_carrera,
             "universidad": self.modificar_universidad,
-            "cantidad_inscritos": self.modificar_cantidad_inscritos
+            "cantidad_inscritos": self.modificar_cantidad_inscritos,
+            "modalidad": self.modificar_modalidad,
+            "calificacion_minima": self.modificar_calificacion_minima,
+            "temas": self.modificar_temas,
+            "ubicacion": self.modificar_ubicacion
         }
         funcion = funciones_modificar.get(atributo)
         if funcion:
@@ -182,7 +249,11 @@ class Materia:
             "prerequisito": self.eliminar_prerequisito,
             "carrera": self.eliminar_carrera,
             "universidad": self.eliminar_universidad,
-            "cantidad_inscritos": self.eliminar_cantidad_inscritos
+            "cantidad_inscritos": self.eliminar_cantidad_inscritos,
+            "modalidad": self.eliminar_modalidad,
+            "calificacion_minima": self.eliminar_calificacion_minima,
+            "temas": self.eliminar_temas,
+            "ubicacion": self.eliminar_ubicacion
         }
         funcion = funciones_eliminar.get(atributo)
         if funcion:
@@ -195,45 +266,44 @@ materia1 = Materia(
     nombre="Cálculo 1", sigla="MAT-132", docente="Victor Hugo Aspiazu",
     horarios=["Lunes 7:30-9:00", "Miércoles 7:30-9:00"], aula="10 Aula A-N4",
     prerequisito="Matematica basica", carrera="Ingeniería Industrial", universidad="UCB",
-    cantidad_inscritos=34
+    cantidad_inscritos=34, modalidad="Presencial", calificacion_minima=60, temas=["Funciones", "Derivadas", "Integrales"], ubicacion= "-17.7045503, -63.157042"
 )
 
 materia2 = Materia(
     nombre="Programación 1", sigla="SIS-112", docente="Eddy Escalante",
     horarios=["Lunes 10:50-12:20", "Miércoles 9:10-11:30"], aula="C2-2",
     prerequisito="Introducción a la Programación", carrera="Ingeniería Industrial", universidad="UCB",
-    cantidad_inscritos=16
+    cantidad_inscritos=16, modalidad="Presencial", calificacion_minima=60, temas=["Programacion Orientada a Objetos", "Condicionales", "Strings"], ubicacion= "-17.7045503, -63.157042"
 )
 
 materia3 = Materia(
     nombre="Fisica y Laboratorio 1", sigla="FIS-111", docente="Victor Hugo Lobos",
     horarios=["Lunes 9:10-10:40", "Miércoles 9:10-12:20"], aula="E2-5",
     prerequisito="Ninguno", carrera="Ingeniería Industrial", universidad="UCB",
-    cantidad_inscritos=45
+    cantidad_inscritos=45, modalidad="Presencial", calificacion_minima=60, temas=["Vectores", "Dinamica", "Cinematica"], ubicacion= "-17.7045503, -63.157042"
 )
 
 materia4 = Materia(
     nombre="Probabilidad y Estadistica 1", sigla="MAT-142", docente="Silvia Barca",
     horarios=["Martes 10:40-12:20", "Jueves 10:40-12:20"], aula="D2-1",
     prerequisito="Ninguno", carrera="Ingeniería Industrial", universidad="UCB",
-    cantidad_inscritos=33
+    cantidad_inscritos=33, modalidad="Presencial", calificacion_minima=60, temas=["Organizacion de Datos", "Medidas de Tendencia", "Medidas de Dispersion"], ubicacion= "-17.7045503, -63.157042"
 )
 
 materia5 = Materia(
     nombre="Manufactura y Mecanizado", sigla="IND-112", docente="Jorge Salvatierra",
     horarios=["Martes 7:30-9:00", "Jueves 7:30-9:00", "Viernes 7:30-9:00"], aula="F1-2",
     prerequisito="Introduccióna Diseño Industrial", carrera="Ingeniería Industrial", universidad="UCB",
-    cantidad_inscritos=14
+    cantidad_inscritos=14, modalidad="Presencial", calificacion_minima=60, temas=["Materiales", "Procesos de Manufactura", "Maquinas de Produccion"], ubicacion= "-17.7045503, -63.157042"
 )
 
 materia6 = Materia(
     nombre="Antropología y Valores", sigla="FHC-101", docente="Exalta Gabriela",
     horarios=["Martes 9:10-10:40", "Jueves 9:10-10:40"], aula="4 Aula A-N-3",
     prerequisito="Ninguno", carrera="Ingeniería Industrial", universidad="UCB",
-    cantidad_inscritos=61
+    cantidad_inscritos=61, modalidad="Presencial", calificacion_minima=60, temas=["Antropologia Social", "Antropologia Cultural", "Antropologia Sociocultural de los departamentos de Bolivia"], ubicacion= "-17.7045503, -63.157042"
 )
 
-# Lista de materias
 materias = [materia1, materia2, materia3, materia4, materia5, materia6]
 
 def mostrar_menu_materias():
@@ -252,21 +322,25 @@ def mostrar_menu_atributos():
     print("7. Carrera")
     print("8. Universidad")
     print("9. Cantidad inscritos")
+    print("10. Modalidad")
+    print("11. Calificacion Minima Aprobacion")
+    print("12. Temas")
+    print("13. Ubicacion Latitud Longitud")
 
 def modificar_o_eliminar():
     while True:
         mostrar_menu_materias()
         try:
-            opcion_materia = int(input("\nIngrese el número de la materia que desea modificar/eliminar: ")) - 1
+            opcion_materia = int(input("\nIngrese el número de la materia que desea modificar/eliminar (1-6): ")) - 1
             if 0 <= opcion_materia < len(materias):
                 materia_seleccionada = materias[opcion_materia]
                 materia_seleccionada.mostrar_info()
 
                 while True:
                     mostrar_menu_atributos()
-                    opcion_atributo = int(input("Seleccione el atributo a modificar/eliminar (1-9): "))
-                    if 1 <= opcion_atributo <= 9:
-                        atributos = ["nombre", "sigla", "docente", "horarios", "aula", "prerequisito", "carrera", "universidad", "cantidad_inscritos"]
+                    opcion_atributo = int(input("Seleccione el atributo a modificar/eliminar (1-13): "))
+                    if 1 <= opcion_atributo <= 13:
+                        atributos = ["nombre", "sigla", "docente", "horarios", "aula", "prerequisito", "carrera", "universidad", "cantidad_inscritos", "modalidad", "calificacion_minima", "temas", "ubicacion"]
                         atributo = atributos[opcion_atributo - 1]
 
                         accion = input(f"¿Desea modificar o eliminar {atributo}? (modificar/eliminar): ").lower()
@@ -291,15 +365,13 @@ def modificar_o_eliminar():
         except ValueError:
             print("Entrada inválida. Por favor, ingrese un número.")
 
-# Mostrar información inicial de todas las materias
+
 print("Información inicial de las materias:")
 for materia in materias:
     materia.mostrar_info()
 
-# Iniciar el menú interactivo
 modificar_o_eliminar()
 
-# Mostrar información actualizada de todas las materias
 print("\nInformación actualizada de las materias:")
 for materia in materias:
     materia.mostrar_info()
