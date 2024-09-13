@@ -22,8 +22,8 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="numero">Ingrese un número entero:</label>
-                    <input type="number" class="form-control" id="numero" placeholder="Número entero" required>
+                    <label for="numeroInput">Ingrese un número entero:</label>
+                    <input type="number" class="form-control" id="numeroInput" placeholder="Número entero" value="0">
                 </div>
                 <div class="text-center">
                     <button class="btn btn-primary" onclick="cargarNum()">CARGAR NUM ENTERO</button>
@@ -32,8 +32,14 @@
                     <button class="btn btn-secondary" onclick="mostrarNum()">MOSTRAR ENTERO</button>
                     <br>
                     <br>
-                    <button class="btn btn-success" onclick="doblar()">Doblar</button>
-                    <button class="btn btn-danger" onclick="resetear()">Resetear</button>
+                    <button class="btn btn-success" onclick="incrementarValor()">(+)</button>
+                    <button class="btn btn-danger" onclick="decrementarValor()">(-)</button>
+                    <br>
+                    <br>
+                    <button class="btn btn-success" onclick="esParImparValorNum()">ES PAR IMPAR</button>
+                    <br>
+                    <br>
+                    <button class="btn btn-success" onclick="esPositivoNegativoValorNum()">ES POSITIVO NEGATIVO</button>
                 </div>
                     <h1>RESULTADO</h1>
                     <div id="resultado" class="mt-2"></div>
