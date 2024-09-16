@@ -44,6 +44,26 @@ class Entero {
     esPositivoNegativo() {
         return (this.Num > 0)
     }
+
+    factorial() {
+        if (this.Num < 0) return "El factorial no está definido para números negativos";
+        let resultado = 1;
+        for (let i = 1; i <= this.Num; i++) {
+            resultado *= i;
+        }
+        return resultado;
+    }
+
+    esPerfecto() {
+        let sumaDivisores = 0;
+        for (let i = 1; i < this.Num; i++) {
+            if (this.Num % i === 0) {
+                sumaDivisores += i;
+            }
+        }
+        return sumaDivisores === this.Num;
+    }
+
 }
 
 //Las funciones = button HTML
@@ -84,3 +104,17 @@ function esPositivoNegativoValorNum(){
     var resp = respuesta ? "Es Num Positivo":"Es Num Negativo"
     ClaseEntero.showResultado(resp)
 }
+
+// Calcular el factorial del número
+function factorialValorNum() {
+    var respuesta = ClaseEntero.factorial();
+    ClaseEntero.showResultado(`Factorial de ${ClaseEntero.getNum()}: ${respuesta}`);
+}
+
+// Verificar si el número es perfecto
+function esPerfectoValorNum() {
+    var respuesta = ClaseEntero.esPerfecto();
+    var resp = respuesta ? "Es un número perfecto" : "No es un número perfecto";
+    ClaseEntero.showResultado(resp);
+}
+
