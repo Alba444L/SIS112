@@ -58,12 +58,17 @@ class Entero:
     def calcularFibonacci(self):
         if self.Num < 0:
             return "La posición en la secuencia de Fibonacci no puede ser negativa"
+        
+        # La secuencia de Fibonacci
+        secuencia = []
+        
+        # Generar la secuencia de Fibonacci
         a, b = 0, 1
-        if self.Num == 0:
-            return a
-        for _ in range(2, self.Num + 1):
+        for _ in range(self.Num):
+            secuencia.append(a)
             a, b = b, a + b
-        return b
+        
+        return secuencia
 
     def menu(self):
         while True:
