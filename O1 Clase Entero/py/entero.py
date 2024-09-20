@@ -59,10 +59,8 @@ class Entero:
         if self.Num < 0:
             return "La posición en la secuencia de Fibonacci no puede ser negativa"
         
-        # La secuencia de Fibonacci
         secuencia = []
         
-        # Generar la secuencia de Fibonacci
         a, b = 0, 1
         for _ in range(self.Num):
             secuencia.append(a)

@@ -76,16 +76,16 @@ class Entero {
     }
 
     calcularFibonacci() {
-        if (this.num < 0) {
-          return "La posición en la secuencia de Fibonacci no puede ser negativa";
+        if (this.Num < 0) {
+            return "La posición en la secuencia de Fibonacci no puede ser negativa";
         }
     
         let secuencia = [];
         let a = 0, b = 1;
     
-        for (let i = 0; i < this.num; i++) {
-          secuencia.push(a);
-          [a, b] = [b, a + b];
+        for (let i = 0; i < this.Num; i++) {
+            secuencia.push(a);
+            [a, b] = [b, a + b];
         }
         return secuencia;
     }
