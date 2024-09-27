@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Enteros</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #007bff;
+        }
+        input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 200px;
+            margin-right: 10px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #lista {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+            width: 250px;
+        }
+        #lista li {
+            background-color: white;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        #lista li:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <h1>Agregar Números a la Lista</h1>
+    <div>
+        <input type="number" id="numero" placeholder="Ingrese un número">
+        <button id="agregarBtn">Agregar</button>
+    </div>
+    
+    <h2>Lista de Números</h2>
+    <ul id="lista"></ul>
+
+    <script src="lista-enteros.js"></script>
+</body>
+</html>
