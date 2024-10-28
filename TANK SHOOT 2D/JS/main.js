@@ -147,6 +147,9 @@ function drawEscenario(ctx, escenario) {
 function updateGame() {
 // Limpiamos el canvas en cada frame
 ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+drawEscenario(ctx, escenario); // Dibujamos el escenario en el canvas
+
 //drawTank(playerTank);
 playerTank.drawTank(ctx);
 //drawEnemyTank(EnemyTank);
