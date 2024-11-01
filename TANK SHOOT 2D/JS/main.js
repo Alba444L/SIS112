@@ -35,6 +35,7 @@ const enemyTank4 = new EnemyTank(600, 100, 'down', 3, game.ancho, game.alto);
 
 // Controles basicos para mmover el tanque del jugador
 window.addEventListener('keydown', function (e) {
+    console.log(e.key)
     switch(e.key) {
         // Las teclas de las FLECHAS del teclado
         case 'ArrowLeft':
@@ -143,12 +144,97 @@ function drawEscenario(ctx, escenario) {
     }   
 }
 
+//13x15
+//Fondo = 0 // Negro
+//Pared = 1 // Cafe
+//Concreto = 2 //Plomo
+
+const mapa = [
+    [0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0],
+    [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1],
+    [0, 1, 0, 0, 0, 2, 1, 1, 2, 0, 1, 1, 1],
+    [0, 1, 0, 0, 1, 2, 1, 1, 2, 1, 0, 1, 1],
+    [0, 1, 0, 0, 0, 2, 1, 1, 2, 0, 0, 1, 0],
+    [0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0],
+    [0, 1, 0, 1, 2, 2, 2, 2, 2, 1, 0, 0, 0],
+    [0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0],
+    [0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0],
+    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0],
+];
+
+const mapa2 = [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1],
+    [0, 1, 0, 0, 0, 2, 1, 1, 2, 0, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0],
+    [0, 1, 0, 1, 2, 2, 2, 2, 2, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+];
+
+
+function DibujarCero(ctx, x, y, x1, y1) {
+    ctx.fillStyle = "#1b2631"; //negro
+    ctx.fillRect(x, y, x1, y1);
+}
+
+function DibujarUno(ctx, x, y, x1, y1) {
+    ctx.fillStyle = "#92451b"; //brown
+    ctx.fillRect(x, y, x1, y1);
+}
+
+function DibujarDos(ctx, x, y, x1, y1) {
+    ctx.fillStyle = "#aab7b8"; //gray
+    ctx.fillRect(x, y, x1, y1);
+}
+
+function DibujarMapa(ctx, mapa) {
+    console.log("okay")
+    for(let row = 0; row < mapa.length; row++) {
+        for(let col = 0; col < mapa[row].length; col++) {
+            const cell = mapa[row][col];
+            const x = col * game.anchoCelda;
+            const y = row * game.altoCelda;
+            switch(cell) {
+                case 0:
+                    DibujarCero(ctx, x, y, game.anchoCelda, game.altoCelda);
+                    break;
+                case 1:
+                    DibujarUno(ctx, x, y, game.anchoCelda, game.altoCelda);
+                    break;
+                case 2:
+                    DibujarDos(ctx, x, y, game.anchoCelda, game.altoCelda);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+}
+
+
 // Lógica del juego (actualización de la pantalla)
 function updateGame() {
 // Limpiamos el canvas en cada frame
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-drawEscenario(ctx, escenario); // Dibujamos el escenario en el canvas
+
+//drawEscenario(ctx, escenario); // Dibujamos el escenario en el canvas
+DibujarMapa(ctx, mapa);
 
 //drawTank(playerTank);
 playerTank.drawTank(ctx);
