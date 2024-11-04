@@ -1,0 +1,2 @@
+const CANT_FILAS = 36;
+const CANT_COLUMNAS = 28;
