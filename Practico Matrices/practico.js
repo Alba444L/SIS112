@@ -55,11 +55,12 @@ class Matriz {
     // EJERCICIO 3
     llenarMatrizCruces() {
         this.vaciarMatriz();
-        const centro = Math.floor(this.filas / 2);
+        const filaCentral = Math.floor(this.filas / 2) -1;
+        const columnaCentral = Math.floor(this.columnas / 2) -1;
         for (let i = 0; i < this.filas; i++) {
             for (let j = 0; j < this.columnas; j++) {
-                // si el cuadrado es parte de la cruz le asigna 1
-                if (i === centro || j === centro) {
+                // le asigna 1 a la fila y columna del medio
+                if (i === filaCentral || j === columnaCentral) {
                     this.matriz[i][j] = 1;
                 } else {
                     this.matriz[i][j] = 0;
@@ -71,26 +72,22 @@ class Matriz {
     
 
     // EJERCICIO 4
-    llenarMatrizBordesDiagonales() {
+    llenarMatrizBordesDiagonales(){
         this.vaciarMatriz();
-    
-        // Rellenar bordes con 1
         for (let i = 0; i < this.filas; i++) {
-            this.matriz[i][0] = 1; 
-            this.matriz[i][this.columnas - 1] = 1;
+            for (let j = 0; j < this.columnas; j++) {
+                // le asigna 1 a los bordes 
+                if (i === 0 || i === this.filas - 1 || j === 0 || j === this.columnas - 1) {
+                    this.matriz[i][j] = 1;
+                } else if (i === 1 || i === this.filas - 2 || j === 1 || j === this.columnas - 2) {
+                    // le asigna 0 a lado de los bordes 
+                    this.matriz[i][j] = 0;
+                } else if (i === j || i + j === this.columnas - 1) {
+                    // le asigna 2 a diagonales4 
+                    this.matriz[i][j] = 2;
+                }
+            }
         }
-        
-        for (let j = 0; j < this.columnas; j++) {
-            this.matriz[0][j] = 1;
-            this.matriz[this.filas - 1][j] = 1;
-        }
-    
-        // Rellenar las diagonales internas con 2, sin tocar los bordes
-        for (let i = 1; i < this.filas - 1; i++) {
-            this.matriz[i][i] = 2; // Diagonal principal
-            this.matriz[i][this.columnas - 1 - i] = 2; // Diagonal inversa
-        }
-    
         this.dibujarMatriz();
     }
     
@@ -140,50 +137,64 @@ class Matriz {
 
     // EJERCICIO 8
     llenarMatrizEspiral() {
-        let top = 0;
-        let bottom = this.filas - 1;
-        let left = 0;
-        let right = this.columnas - 1;
-
-        while (top <= bottom && left <= right) {
-            // Rellenar la fila superior
-            for (let i = left; i <= right; i++) {
-                this.matriz[top][i] = 1;
-            }
-            top++;
-
-            // Rellenar la columna derecha
-            for (let i = top; i <= bottom; i++) {
-                this.matriz[i][right] = 1;
-            }
-            right--;
-
-            // Rellenar la fila inferior
-            if (top <= bottom) {
-                for (let i = right; i >= left; i--) {
-                    this.matriz[bottom][i] = 1;
+        this.vaciarMatriz();
+        let row = 0; //empieza desde valor 0
+        let col = 0;
+        let direction = 0; // para cambiar direcciones
+        let steps = 1; 
+        let stepCount = 0;
+    
+        for (let i = 0; i < this.columnas * this.filas; i++) {
+            this.matriz[row][col] = 1;
+    
+            stepCount++;
+    
+            if (stepCount === steps) {
+                stepCount = 0;
+                direction = (direction + 1) % 4;
+                if (direction % 2 === 0) {
+                    steps++;
                 }
-                bottom--;
             }
-
-            // Rellenar la columna izquierda
-            if (left <= right) {
-                for (let i = bottom; i >= top; i--) {
-                    this.matriz[i][left] = 1;
-                }
-                left++;
+    
+            switch (direction) {
+                case 0: // se mueve derecha
+                    if (col + 1 >= this.columnas) {
+                        break; 
+                    }
+                    col++;
+                    break;
+                case 1: // se mueve abaj
+                    if (row + 1 >= this.filas) {
+                        break;
+                    }
+                    row++;
+                    break;
+                case 2: //se mueve iquierda
+                    if (col - 1 < 0) {
+                        break; 
+                    }
+                    col--;
+                    break;
+                case 3: //se mueve arriba
+                    if (row - 1 < 0) {
+                        break; 
+                    }
+                    row--;
+                    break;
             }
         }
-
+    
         this.dibujarMatriz();
     }
-
+    
+    
     // EJERCICIO 9
     llenarMatrizTrianguloSuperiorIzquierdo() {
         this.vaciarMatriz();
         for (let i = 0; i < this.filas; i++) {
             for (let j = 0; j <= i; j++) {
-                this.matriz[i][j] = 1; // le asigna 1 a los cuadrados dentro del triangulo
+                this.matriz[i][j] = 1; // se le asigna 1 en i, j
             }
         }
         this.dibujarMatriz();
@@ -194,8 +205,9 @@ class Matriz {
     llenarMatrizTrianguloInferiorDerecho() {
         this.vaciarMatriz();
         for (let i = 0; i < this.filas; i++) {
+            // se empiza llenar desde la columna hasta el final
             for (let j = this.columnas - i - 1; j < this.columnas; j++) {
-                this.matriz[i][j] = 1; // llena la matriz con 1 en el triangulo
+                this.matriz[i][j] = 1;
             }
         }
         this.dibujarMatriz();
@@ -219,6 +231,7 @@ class Matriz {
         this.dibujarMatriz();
     }
 
+
     // EJERCICIO 12
     llenarMatrizTrianguloCentral() {
         this.vaciarMatriz();
@@ -234,48 +247,92 @@ class Matriz {
 
     // EJERCICIO 13
     llenarMatrizRombosConcentricos() {
-        this.vaciarMatriz();
-        const centro = Math.floor(this.filas / 2);
+        this.vaciarMatriz(); 
 
         for (let i = 0; i < this.filas; i++) {
             for (let j = 0; j < this.columnas; j++) {
-                // Calcular la distancia al centro
-                const distancia = Math.max(Math.abs(centro - i), Math.abs(centro - j));
-
-                // Rellenar con 1 si la distancia es menor o igual a la cantidad de capas
-                if (distancia < centro) {
-                    this.matriz[i][j] = 1;
-                }
+                this.matriz[i][j] = 1;
             }
         }
+        
+        const tamRombo = 3; // el tamaño del rombo 
 
+        // rombo en la esquina superior izquierda
+        for (let i = 0; i <= tamRombo; i++) {
+            for (let j = 0; j <= tamRombo - i; j++) {
+                this.matriz[i][j] = 0; 
+                this.matriz[j][i] = 0;
+            }
+        }
+        //  rombo en la esquina superior derecha
+        for (let i = 0; i <= tamRombo; i++) {
+            for (let j = 0; j <= tamRombo - i; j++) {
+                this.matriz[i][this.columnas - 1 - j] = 0;
+                this.matriz[j][this.columnas - 1 - i] = 0;
+            }
+        }
+        
+        // rombo en la esquina inferior izquierda
+        for (let i = 0; i <= tamRombo; i++) {
+            for (let j = 0; j <= tamRombo - i; j++) {
+                this.matriz[this.filas - 1 - i][j] = 0;
+                this.matriz[this.filas - 1 - j][i] = 0;
+            }
+        }
+        
+        // rombo en la esquina inferior derecha
+        for (let i = 0; i <= tamRombo; i++) {
+            for (let j = 0; j <= tamRombo - i; j++) {
+                this.matriz[this.filas - 1 - i][this.columnas - 1 - j] = 0;
+                this.matriz[this.filas - 1 - j][this.columnas - 1 - i] = 0;
+                }
+            }
         this.dibujarMatriz();
-    }
+        }
+
 
     // EJERCICIO 14
     llenarMatrizCrucesConcentricas() {
         this.vaciarMatriz();
-        const centro = Math.floor(this.filas / 2);
-
-        for (let i = 0; i < this.filas; i++) {
-            for (let j = 0; j < this.columnas; j++) {
-                // Calcular la distancia al centro
-                const distancia = Math.max(Math.abs(centro - i), Math.abs(centro - j));
-
-                // Rellenar con 1 si la distancia es menor o igual a la cantidad de capas
-                if (distancia < centro) {
+        const filas = this.filas;
+        const columnas = this.columnas;
+    
+        for (let i = 0; i < filas; i++) {
+            for (let j = 0; j < columnas; j++) {
+                if (
+                    // se evita columna 2 y 8
+                    j !== 1 && j !== 8 &&
+                    
+                    (
+                        // borde de afuera 
+                        (i === 0 && j >= 2 && j <= columnas - 3) ||
+                        (i === filas - 1 && j >= 2 && j <= columnas - 3) ||
+                        (j === 0 && i >= 2 && i <= filas - 3) ||
+                        (j === columnas - 1 && i >= 2 && i <= filas - 3) ||
+    
+                        // se crea la cruz
+                        (i === 2 && j >= 1 && j <= columnas - 2) ||
+                        (i === filas - 3 && j >= 1 && j <= columnas - 2) ||
+                        (j === 2 && i >= 1 && i <= filas - 2) ||
+                        (j === columnas - 3 && i >= 1 && i <= filas - 2) ||
+    
+                        // es el centro de la cruz
+                        (i === Math.floor(filas / 2) && j >= 3 && j <= columnas - 4) ||
+                        (j === Math.floor(columnas / 2) && i >= 3 && i <= filas - 4)
+                    )
+                ) {
                     this.matriz[i][j] = 1;
+                } else {
+                    this.matriz[i][j] = 0;
                 }
             }
         }
-
+    
         this.dibujarMatriz();
     }
     
     
-
     // EJERCICIO 15
-
     llenarMatrizBanderaDiagonal() {
         this.vaciarMatriz();
         for (let i = 0; i < this.filas; i++) {
@@ -368,40 +425,35 @@ class Matriz {
     // EJERCICIO 20
     llenarMatrizRomboEsquinas() {
         this.vaciarMatriz();
-        const romboAltura = 3; // Altura del rombo
-
-        // Rellenar el rombo en la esquina superior izquierda
-        for (let i = 0; i < romboAltura; i++) {
-            for (let j = 0; j <= i; j++) {
-                this.matriz[i][j] = 1; // Parte superior del rombo
-                this.matriz[i][this.columnas - 1 - j] = 1; // Parte derecha del rombo
+        const tamRombo = 3; // Tamaño del rombo desde la esquina hacia el centro
+        // Dibuja rombo en la esquina superior izquierda
+        for (let i = 0; i <= tamRombo; i++) {
+            for (let j = 0; j <= tamRombo - i; j++) {
+                this.matriz[i][j] = 1;
+                this.matriz[j][i] = 1;
             }
         }
-
-        // Rellenar el rombo en la esquina superior derecha
-        for (let i = 0; i < romboAltura; i++) {
-            for (let j = 0; j <= i; j++) {
-                this.matriz[i][this.columnas - 1 - j] = 1; // Parte superior del rombo
-                this.matriz[i][j] = 1; // Parte izquierda del rombo
+        // Dibuja rombo en la esquina superior derecha
+        for (let i = 0; i <= tamRombo; i++) {
+            for (let j = 0; j <= tamRombo - i; j++) {
+                this.matriz[i][this.columnas - 1 - j] = 1;
+                this.matriz[j][this.columnas - 1 - i] = 1;
             }
         }
-
-        // Rellenar el rombo en la esquina inferior izquierda
-        for (let i = 0; i < romboAltura; i++) {
-            for (let j = 0; j <= i; j++) {
-                this.matriz[this.filas - 1 - i][j] = 1; // Parte inferior del rombo
-                this.matriz[this.filas - 1 - i][this.columnas - 1 - j] = 1; // Parte derecha del rombo
+        // Dibuja rombo en la esquina inferior izquierda
+        for (let i = 0; i <= tamRombo; i++) {
+            for (let j = 0; j <= tamRombo - i; j++) {
+                this.matriz[this.filas - 1 - i][j] = 1;
+                this.matriz[this.filas - 1 - j][i] = 1;
             }
         }
-
-        // Rellenar el rombo en la esquina inferior derecha
-        for (let i = 0; i < romboAltura; i++) {
-            for (let j = 0; j <= i; j++) {
-                this.matriz[this.filas - 1 - i][this.columnas - 1 - j] = 1; // Parte inferior del rombo
-                this.matriz[this.filas - 1 - i][j] = 1; // Parte izquierda del rombo
+        // Dibuja rombo en la esquina inferior derecha
+        for (let i = 0; i <= tamRombo; i++) {
+            for (let j = 0; j <= tamRombo - i; j++) {
+                this.matriz[this.filas - 1 - i][this.columnas - 1 - j] = 1;
+                this.matriz[this.filas - 1 - j][this.columnas - 1 - i] = 1;
             }
         }
-
         this.dibujarMatriz();
     }
 
